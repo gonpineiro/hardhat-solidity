@@ -111,3 +111,30 @@ Si ya tienes todo configurado correctamente, el siguiente paso será el desplieg
 
 ### Conclusión
 Has visto a lo largo de esta clase lo importante y útil que es trabajar con entornos de desarrollo como Hardhat. Hemos podido desarrollar un contrato, probarlo y tener todo listo para su posterior despliegue. También habrás observado la importancia de Javascript, aunque realmente no necesitas mucho conocimiento en el lenguaje, solo conocer lo básico.
+
+El proceso de desarrollo de un contrato, pasando por las configuraciones necesarias y pruebas del mismo, finaliza con el despliegue del contrato a la blockchain deseada.
+
+### Despliegue de contrato con Hardhat
+Para desplegar tu contrato, deberás compilar el mismo. Hardhat también nos ayuda con eso gracias al comando npx hardhat compile. Verás que el mismo crea varios directorios en tu proyecto con el bytecode del contrato desarrollado. Recuerda que la EVM no entiende nada de Solidity, los contratos deben compilarse para que sean interpretados correctamente con la red de Ethereum.
+
+Además del bytecode del contrato, encontrarás un archivo denominado Application Binary Interface o ABI. El ABI, es un JSON que podemos utilizar desde cualquier cliente para saber cómo interactuar con el contrato. Qué métodos posee, qué parámetros recibe, etc. En próximas clases, utilizaremos el mismo para tipar la información y comunicarnos con el smart contract desplegado en la blockchain.
+
+```sh
+npx hardhat compile
+```
+
+Luego de compilar tu contrato, de haber configurado el archivo hardhat.config.js y desarrollado el script de despliegue con Hardhat, el comando:
+
+```sh
+npx hardhat run scripts/deploy.js --network goerli
+``` 
+
+será el encargado de desplegar el contrato, en este caso, en Goerli.
+
+Observarás en la consola de desarrollo que, luego del lanzamiento exitoso del contrato, este entrega una dirección totalmente única que utilizarás para localizar tu smart contract en la blockchain en cuestión donde haya sido desplegado.
+
+Cada blockchain, sea la mainnet o una red de prueba, tendrá su propio explorador que te permitirá visualizar y obtener más información sobre lo que está ocurriendo en la red. Haciendo uso del explorador de Goerli, más la dirección del contrato, podrás visualizar el estado de este y corroborar su correcto despliegue y todas las transacciones que interactúan con el mismo.
+
+Saber utilizar los exploradores de blockchain será clave para convertirte en un gran desarrollador web3.
+
+Hasta este punto, solo queda felicitarte por haber desarrollado y desplegado tu primer smart contract con Hardhat.

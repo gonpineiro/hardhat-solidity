@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div>
+            <input type="text" id="counter" />
+            <button onclick="increment()">Increme</button>
+            <button onclick="getCounter()">Get Counter</button>
+        </div>
+        <script
+            src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+            type="application/javascript"
+        ></script>
+
+        <script>
+            const CONTRACT_ABI = [
+                {
+                    inputs: [
+                        {
+                            internalType: 'uint256',
+                            name: '_counter',
+                            type: 'uint256',
+                        },
+                    ],
+                    stateMutability: 'nonpayable',
+                    type: 'constructor',
+                },
+                {
+                    inputs: [],
+                    name: 'getCounter',
+                    outputs: [
+                        {
+                            internalType: 'uint256',
+                            name: '',
+                            type: 'uint256',
+                        },
+                    ],
+                    stateMutability: 'view',
+                    type: 'function',
+                },
+                {
+                    inputs: [],
+                    name: 'increment',
+                    outputs: [],
+                    stateMutability: 'nonpayable',
+                    type: 'function',
+                },
+            ];
+
+            const CONTRACT_ADDRESS = '0x687078e7F26bB2E939b98A4e47367D6C96837254';
+            let signer;
+            let contract;
+
+            const provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
+
+            provider.send('eth_requestAccounts', []).then(() => {
+                provider.listAccounts().then((accounts) => {
+                    signer = provider.getSigner(accounts[0]);
+                    contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+                });
+            });
+
+            async function increment() {
+                await contract.increment();
+            }
+
+            async function getCounter() {
+                const counter = await contract.getCounter();
+                document.getElementById('counter').value = counter;
+            }
+        </script>
+    </body>
+</html>
